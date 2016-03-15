@@ -19,7 +19,22 @@
             </ul>
             
             <div id="content">
-                {% block content %}{% endblock %}
+                {% block content %}
+                <div class="left-column">
+                    {% block articles_content %}{% endblock %} 
+                </div>
+                <div class="right-column">
+                    <h2>Categories</h2>
+                    <ul>
+                        
+                    </ul>
+                    
+                    <h2>Tags</h2>
+                    <ul>
+                        
+                    </ul>
+                </div>
+                {% endblock content %}
             </div>
             <div id="footer">
                 Copyright &copy; 2010 - 2016 Asen Bozhilov - All Rights Reserved

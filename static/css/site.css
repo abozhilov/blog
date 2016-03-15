@@ -95,6 +95,8 @@ table td {
 	padding: 5px 10px;
 }
 
+
+
 /*layout boxes*/
 #container {
     min-width: 900px;
@@ -109,6 +111,17 @@ table td {
 
 #content {
     padding: 0 1.5em;
+    display: table;
+}
+
+#content .left-column {
+    width: 1200px;
+    display: table-cell;
+} 
+
+#content .right-column {
+    display: table-cell;
+    width: 300px;
 } 
 
 #logo {
