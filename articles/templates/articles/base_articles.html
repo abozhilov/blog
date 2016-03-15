@@ -1,44 +1,20 @@
-{% load staticfiles %}
-<!DOCTYPE html>
-<html>
-    <head>
-		<title>{% block title %}Personal page of Asen Bozhilov{% endblock title %}</title>
-		<meta http-equiv="content-type" content="text/html; charset=utf-8">
-		<link rel="stylesheet" type="text/css" href="{% static "css/site.css" %}">
-	</head>
-	<body>
-        <div id="container">
-            <div id="header">
-                <h1 id="logo"><a href="/">asenbozhilov.com</a></h1>
-                <p class="slogan">Personal page of Asen Bozhilov</p>                
-                <a class="doc-banner" href='https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array' title='JavaScript Array concat'><img src='{% static "images/promotejsh.png" %}' alt='JavaScript Array concat'></a>
-            </div>
-            
-            <ul id="navigation">
-                <li><a href="/">Articles</a></li>
-            </ul>
-            
-            <div id="content">
-                {% block content %}
-                <div class="left-column">
-                    {% block articles_content %}{% endblock %} 
-                </div>
-                <div class="right-column">
-                    <h2>Categories</h2>
-                    <ul>
-                        
-                    </ul>
-                    
-                    <h2>Tags</h2>
-                    <ul>
-                        
-                    </ul>
-                </div>
-                {% endblock content %}
-            </div>
-            <div id="footer">
-                Copyright &copy; 2010 - 2016 Asen Bozhilov - All Rights Reserved
-            </div>
-        </div>
-	</body>
-</html>
+{% extends "base.html" %}
+
+{% block content %}
+<div class="left-column">
+    {% block articles_content %}{% endblock %} 
+</div>
+<div class="right-column">
+    <h2>Categories</h2>
+    <ul>
+        {% for cat in categories %}
+        <li><a href="#">{{ cat.name }}</a></li>
+        {% endfor %}
+    </ul>
+    
+    <h2>Tags</h2>
+    <ul>
+        
+    </ul>
+</div>
+{% endblock content %}

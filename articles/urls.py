@@ -4,5 +4,5 @@ from . import views
 app_name = 'articles'
 
 urlpatterns = [
-    url(r'^(?P<page>[0-9]+)?$', views.article_list, name = 'index'),
+    url(r'^(?P<page>[0-9]+)?$', views.ArticleListView.as_view(), name = 'index'),
 ]
