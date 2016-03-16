@@ -8,11 +8,16 @@
     <h2>Categories</h2>
     <ul>
         {% for cat in categories %}
-        <li><a href="#">{{ cat.name }}</a></li>
+            <li><a href="{% url 'articles:category' cat_id=cat.id %}">{{ cat.name }}</a></li>
         {% endfor %}
     </ul>
     
-    <h2>Tags</h2>
+    <h2>Popular Tags</h2>
+        <ul>
+        {% for tag in tags %}
+            <li><a href="{% url 'articles:tag' tag_id=tag.id %}">{{ tag.name }}</a></li>
+        {% endfor %}
+        </ul>
     <ul>
         
     </ul>

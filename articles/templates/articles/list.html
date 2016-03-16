@@ -1,3 +1,18 @@
 {% extends "articles/base_articles.html" %}
 
-{% block title %} It works now {% endblock title %}
+{% block articles_content %}
+    {% if title %}
+        <h1>{{ title }}</h1>
+    {% endif %}
+    {% for article in articles %}
+        <h2><a href="{% url 'articles:article' article_id=article.id %}">{{ article.title }}</a></h2>
+        <p>{{ article.publish_date|date:'d.m.Y H:i' }} - 
+            {% for tag in article.tags.all %}
+                {% if not forloop.first %} | {% endif %}<a href="{% url 'articles:tag' tag_id=tag.id %}">{{ tag.name }}</a>
+            {% endfor %}
+        </p>
+        <div>{{ article.description }}</div>
+    {% empty %}
+        <h2> There are no articles </h2>
+    {% endfor %}
+{% endblock articles_content %}

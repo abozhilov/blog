@@ -1,0 +1,11 @@
+{% extends "articles/base_articles.html" %}
+
+{% block articles_content %}
+<h1>{{ article.title }}</h1>
+<p>{{ article.publish_date|date:'d.m.Y H:i' }} - 
+    {% for tag in article.tags.all %}
+        {% if not forloop.first %} | {% endif %}<a href="{% url 'articles:tag' tag_id=tag.id %}">{{ tag.name }}</a>
+    {% endfor %}
+</p>
+<div>{{ article.post }}</div>
+{% endblock articles_content %}

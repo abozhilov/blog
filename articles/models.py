@@ -23,12 +23,16 @@ class Tag(models.Model):
     
 class Article(models.Model):
     title = models.CharField(max_length = 1000)
+    description = models.TextField(default = '')
     post = models.TextField()
     draft = models.BooleanField()
     publish_date = models.DateTimeField()
     author = models.ForeignKey(Author)
     category = models.ForeignKey(Category)
     tags = models.ManyToManyField(Tag)
+    
+    def __str__(self):
+        return self.title
 
 class Comment(models.Model):
     name = models.CharField(max_length = 200)
