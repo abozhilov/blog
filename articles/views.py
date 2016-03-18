@@ -3,13 +3,14 @@ from django.views import generic
 from django.db.models import Count
 from articles.models import Category, Tag, Article, Comment
 
-def get_base_context():
-    return {
-        'categories' : Category.objects.all(),
-        'tags' : Tag.objects.annotate(tag_nums = Count('article')).order_by('-tag_nums')[:5]
-    }
+class ArticleBaseView():
+    def get_article_context(self):
+        return {
+            'categories' : Category.objects.all(),
+            'tags' : Tag.objects.annotate(tag_nums = Count('article')).order_by('-tag_nums')[:5]
+        }
 
-class ArticleListView(generic.ListView):
+class ArticleListView(generic.ListView, ArticleBaseView):
     template_name = 'articles/list.html'
     paginate_by = 10
     model = None
@@ -26,7 +27,7 @@ class ArticleListView(generic.ListView):
     
     def get_context_data(self, **kwаrgs):
         context = super(ArticleListView, self).get_context_data(**kwаrgs)
-        context.update(get_base_context())
+        context.update(self.get_article_context())
         
         if self.category is not None:
             context['title'] = self.category.name
@@ -41,13 +42,13 @@ class TagListView(ArticleListView):
     model = Tag
     pk_url_kwarg = 'tag_id'
 
-class ArticleView(generic.DetailView):
+class ArticleView(generic.DetailView, ArticleBaseView):
     template_name = 'articles/article.html'
     model = Article
     pk_url_kwarg = 'article_id'
 
     def get_context_data(self, **kwаrgs):
         context = super(ArticleView, self).get_context_data(**kwаrgs)
-        context.update(get_base_context())
+        context.update(self.get_article_context())
         
         return context
