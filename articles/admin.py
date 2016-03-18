@@ -1,8 +1,17 @@
 from django.contrib import admin
-from articles import models
+from tinymce.widgets import TinyMCE
+from django.db import models
+from articles.models import Author, Category, Tag, Comment, Article
 
-admin.site.register(models.Author)
-admin.site.register(models.Category)
-admin.site.register(models.Tag)
-admin.site.register(models.Comment)
-admin.site.register(models.Article)
+admin.site.register(Author)
+admin.site.register(Category)
+admin.site.register(Tag)
+admin.site.register(Comment)
+
+
+class ArticleAdmin(admin.ModelAdmin):
+    formfield_overrides = {
+        models.TextField: {'widget' : TinyMCE(attrs={'cols': 120, 'rows': 30})}
+    }
+
+admin.site.register(Article, ArticleAdmin)

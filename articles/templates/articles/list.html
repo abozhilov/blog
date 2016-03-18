@@ -4,15 +4,18 @@
     {% if title %}
         <h1>{{ title }}</h1>
     {% endif %}
-    {% for article in articles %}
+    {% for article in object_list %}
         <h2><a href="{% url 'articles:article' article_id=article.id %}">{{ article.title }}</a></h2>
         <p>{{ article.publish_date|date:'d.m.Y H:i' }} - 
             {% for tag in article.tags.all %}
                 {% if not forloop.first %} | {% endif %}<a href="{% url 'articles:tag' tag_id=tag.id %}">{{ tag.name }}</a>
             {% endfor %}
         </p>
+        {% autoescape off %}
         <div>{{ article.description }}</div>
+        {% endautoescape %}
     {% empty %}
         <h2> There are no articles </h2>
     {% endfor %}
+    
 {% endblock articles_content %}

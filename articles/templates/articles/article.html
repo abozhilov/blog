@@ -7,5 +7,7 @@
         {% if not forloop.first %} | {% endif %}<a href="{% url 'articles:tag' tag_id=tag.id %}">{{ tag.name }}</a>
     {% endfor %}
 </p>
+{% autoescape off %}
 <div>{{ article.post }}</div>
+{% endautoescape %}
 {% endblock articles_content %}

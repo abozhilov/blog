@@ -116,6 +116,7 @@ table td {
 
 #content .left-column {
     width: 1200px;
+    padding-right: 40px;
     display: table-cell;
 } 
 
