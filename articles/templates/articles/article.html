@@ -11,5 +11,11 @@
 {% autoescape off %}
 <div>{{ article.post }}</div>
 {% endautoescape %}
-{% article_comments article %}
+
+<h2>Comments</h2>
+{% for comment in comments %}
+<h4>{{ comment.name }}</h4>
+<div>{{ comment.comment_text }}</div>
+{% endfor %}
+
 {% endblock articles_content %}

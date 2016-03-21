@@ -16,8 +16,3 @@ def tags_list():
         'tags' : Tag.objects.annotate(tag_nums = Count('article')).order_by('-tag_nums')[:5]
     }
 
-@register.inclusion_tag('articles/comments.html')
-def article_comments(article):
-    return {
-        'comments' : article.comment_set.all()
-    }

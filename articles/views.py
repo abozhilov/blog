@@ -38,3 +38,9 @@ class ArticleView(generic.DetailView):
     template_name = 'articles/article.html'
     model = Article
     pk_url_kwarg = 'article_id'
+    
+    def get_context_data(self, **kwargs):
+        context = super(ArticleView, self).get_context_data(**kwargs)
+        context['comments'] = self.object.comment_set.all()
+        
+        return context
