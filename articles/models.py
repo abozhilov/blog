@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 class Author(models.Model):
     name = models.CharField(max_length = 100)
@@ -26,7 +27,7 @@ class Article(models.Model):
     description = models.TextField(default = '')
     post = models.TextField()
     draft = models.BooleanField()
-    publish_date = models.DateTimeField()
+    publish_date = models.DateTimeField(default = timezone.now)
     author = models.ForeignKey(Author)
     category = models.ForeignKey(Category)
     tags = models.ManyToManyField(Tag)
@@ -38,4 +39,5 @@ class Comment(models.Model):
     name = models.CharField(max_length = 200)
     email = models.CharField(max_length = 200)
     comment_text = models.TextField()
+    publish_date = models.DateTimeField(default = timezone.now)
     article = models.ForeignKey(Article, on_delete = models.CASCADE)

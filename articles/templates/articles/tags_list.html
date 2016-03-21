@@ -1,0 +1,6 @@
+<h2>Popular Tags</h2>
+<ul>
+{% for tag in tags %}
+    <li><a href="{% url 'articles:tag' tag_id=tag.id %}">{{ tag.name }}</a></li>
+{% endfor %}
+</ul>

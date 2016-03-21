@@ -1,16 +1,9 @@
 from django.shortcuts import render, get_object_or_404
 from django.views import generic
-from django.db.models import Count
 from articles.models import Category, Tag, Article, Comment
 
-class ArticleBaseView():
-    def get_article_context(self):
-        return {
-            'categories' : Category.objects.all(),
-            'tags' : Tag.objects.annotate(tag_nums = Count('article')).order_by('-tag_nums')[:5]
-        }
 
-class ArticleListView(generic.ListView, ArticleBaseView):
+class ArticleListView(generic.ListView):
     template_name = 'articles/list.html'
     paginate_by = 10
     model = None
@@ -27,7 +20,6 @@ class ArticleListView(generic.ListView, ArticleBaseView):
     
     def get_context_data(self, **kwаrgs):
         context = super(ArticleListView, self).get_context_data(**kwаrgs)
-        context.update(self.get_article_context())
         
         if self.category is not None:
             context['title'] = self.category.name
@@ -42,13 +34,7 @@ class TagListView(ArticleListView):
     model = Tag
     pk_url_kwarg = 'tag_id'
 
-class ArticleView(generic.DetailView, ArticleBaseView):
+class ArticleView(generic.DetailView):
     template_name = 'articles/article.html'
     model = Article
     pk_url_kwarg = 'article_id'
-
-    def get_context_data(self, **kwаrgs):
-        context = super(ArticleView, self).get_context_data(**kwаrgs)
-        context.update(self.get_article_context())
-        
-        return context

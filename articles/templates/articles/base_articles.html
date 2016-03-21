@@ -1,25 +1,12 @@
 {% extends "base.html" %}
+{% load article_tags %}
 
 {% block content %}
 <div class="left-column">
     {% block articles_content %}{% endblock %} 
 </div>
 <div class="right-column">
-    <h2>Categories</h2>
-    <ul>
-        {% for cat in categories %}
-            <li><a href="{% url 'articles:category' cat_id=cat.id %}">{{ cat.name }}</a></li>
-        {% endfor %}
-    </ul>
-    
-    <h2>Popular Tags</h2>
-        <ul>
-        {% for tag in tags %}
-            <li><a href="{% url 'articles:tag' tag_id=tag.id %}">{{ tag.name }}</a></li>
-        {% endfor %}
-        </ul>
-    <ul>
-        
-    </ul>
+    {% categories_list %}
+    {% tags_list %}
 </div>
 {% endblock content %}
