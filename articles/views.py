@@ -1,6 +1,9 @@
 from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponseRedirect
+from django.core.urlresolvers import reverse
 from django.views import generic
 from articles.models import Category, Tag, Article, Comment
+from articles.forms import CommentForm
 
 
 class ArticleListView(generic.ListView):
@@ -34,13 +37,26 @@ class TagListView(ArticleListView):
     model = Tag
     pk_url_kwarg = 'tag_id'
 
-class ArticleView(generic.DetailView):
-    template_name = 'articles/article.html'
-    model = Article
-    pk_url_kwarg = 'article_id'
-    
-    def get_context_data(self, **kwargs):
-        context = super(ArticleView, self).get_context_data(**kwargs)
-        context['comments'] = self.object.comment_set.all()
         
-        return context
+def article(request, article_id):
+    article = get_object_or_404(Article, pk=article_id)
+    comments = article.comment_set.order_by('pk')
+    
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        
+        if form.is_valid():
+            comment = form.save(commit = False)
+            comment.article = article
+            comment.save()
+            
+            return HttpResponseRedirect(reverse('articles:article', kwargs = {'article_id' : article_id}) + '#comment-' + str(comment.id))
+    else:
+        form = CommentForm()
+        
+    return render(request, 'articles/article.html', {
+        'article'  : article,
+        'comments' : comments,
+        'form'     : form
+    })
+    

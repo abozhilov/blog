@@ -14,8 +14,15 @@
 
 <h2>Comments</h2>
 {% for comment in comments %}
-<h4>{{ comment.name }}</h4>
-<div>{{ comment.comment_text }}</div>
+    <h4 id="comment-{{ comment.id }}">{{ comment.name }} - <a href="{% url 'articles:article' article.id %}#comment-{{ comment.id }}">{{ comment.publish_date|date:'d.m.Y H:i' }}</a></h4>
+    <div>{{ comment.comment_text }}</div>
+{% empty %}
+    <div>Currently there are no comments</div>
 {% endfor %}
-
+<h2 id="leave-comment">Leave a comment:</h2>
+<form action="{% url 'articles:article' article.id %}#leave-comment" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Comment">
+</form>
 {% endblock articles_content %}
